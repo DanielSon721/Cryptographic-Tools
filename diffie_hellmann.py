@@ -1,14 +1,15 @@
 import sys
 
 def diffie_hellman(p, g, a_private, b_private):
-    """Perform Diffie–Hellman key exchange.
 
+    """
     p: prime modulus
     g: base (generator)
     a_private: Alice's private key
     b_private: Bob's private key
     """
-    # Public keys
+
+    # public keys
     A = pow(g, a_private, p)
     B = pow(g, b_private, p)
 
@@ -19,21 +20,21 @@ def diffie_hellman(p, g, a_private, b_private):
     return A, B, shared_secret_a, shared_secret_b
 
 
+# ---------------------- MAIN ----------------------
 def main():
-    print("=== Diffie–Hellman Key Exchange ===")
 
     try:
         p = int(input("Enter a large prime number (p): "))
         g = int(input("Enter a primitive root modulo p (g): "))
     except ValueError:
-        print("Error: p and g must be integers.")
+        print("Error: p and g must be integers")
         sys.exit(1)
 
     try:
         a_private = int(input("Enter Alice's private key: "))
         b_private = int(input("Enter Bob's private key: "))
     except ValueError:
-        print("Error: private keys must be integers.")
+        print("Error: private keys must be integers")
         sys.exit(1)
 
     A, B, shared_a, shared_b = diffie_hellman(p, g, a_private, b_private)

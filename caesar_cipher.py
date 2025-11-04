@@ -15,7 +15,7 @@ def hidden_input(prompt=""):
                 sys.stdout.write('\r\n')
                 sys.stdout.flush()
                 break
-            elif ch == b'\x08':  # Backspace
+            elif ch == b'\x08':  # backspace
                 if chars:
                     chars.pop()
             else:
@@ -44,7 +44,7 @@ def hidden_input(prompt=""):
                     sys.stdout.write('\r\n')
                     sys.stdout.flush()
                     break
-                elif ch == '\x7f':  # Backspace
+                elif ch == '\x7f':  # backspace
                     if chars:
                         chars.pop()
                 else:
@@ -55,7 +55,7 @@ def hidden_input(prompt=""):
                         dot_shown = True
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-            sys.stdout.flush()   # ensure prompt resets correctly
+            sys.stdout.flush()
         return ''.join(chars)
 
 
@@ -77,20 +77,23 @@ def shift_text(text, shift, direction):
     return result
 
 
-# Normal inputs
-file_path = input("Enter the path to the text file: ")
-shift_amount = int(hidden_input("Enter how many characters to shift by: "))
-direction = hidden_input("Enter shift direction ('left' or 'right'): ").strip().lower()
+# ---------------------- MAIN ----------------------
+def main():
+    file_path = input("Enter the path to the text file: ")
+    shift_amount = int(hidden_input("Enter how many characters to shift by: "))
+    direction = hidden_input("Enter shift direction ('left' or 'right'): ").strip().lower()
 
-# Read and shift
-try:
-    with open(file_path, "r") as file:
-        content = file.read()
-except FileNotFoundError:
-    print("Error: File not found.")
-    sys.exit(1)
+    try:
+        with open(file_path, "r") as file:
+            content = file.read()
+    except FileNotFoundError:
+        print("Error: File not found.")
+        sys.exit(1)
 
-shifted_text = shift_text(content, shift_amount, direction)
+    shifted_text = shift_text(content, shift_amount, direction)
 
-print("\nShifted text:\n")
-print(shifted_text)
+    print("\nShifted text:\n")
+    print(shifted_text)
+
+if __name__ == "__main__":
+    main()

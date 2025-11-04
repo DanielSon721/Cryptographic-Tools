@@ -15,7 +15,7 @@ def hidden_input(prompt=""):
                 sys.stdout.write('\r\n')
                 sys.stdout.flush()
                 break
-            elif ch == b'\x08':  # Backspace
+            elif ch == b'\x08':  # backspace
                 if chars:
                     chars.pop()
             else:
@@ -44,7 +44,7 @@ def hidden_input(prompt=""):
                     sys.stdout.write('\r\n')
                     sys.stdout.flush()
                     break
-                elif ch == '\x7f':  # Backspace
+                elif ch == '\x7f':  # backspace
                     if chars:
                         chars.pop()
                 else:
@@ -75,26 +75,30 @@ def vigenere_cipher(text, key, mode="encrypt"):
             result.append(chr(shifted))
             key_index += 1
         else:
-            result.append(char)  # spaces/punctuation stay as-is
+            result.append(char)
 
     return ''.join(result)
 
 
-# === MAIN PROGRAM ===
-file_path = input("Enter the path to the text file: ")
-key = hidden_input("Enter the encryption key: ").strip()
-mode = input("Enter mode ('encrypt' or 'decrypt'): ").strip().lower()
+# ---------------------- MAIN ----------------------
+def main():
+    file_path = input("Enter the path to the text file: ")
+    key = hidden_input("Enter the encryption key: ").strip()
+    mode = input("Enter mode ('encrypt' or 'decrypt'): ").strip().lower()
 
-# Read file
-try:
-    with open(file_path, "r") as file:
-        content = file.read()
-except FileNotFoundError:
-    print("Error: File not found.")
-    sys.exit(1)
+    # Read file
+    try:
+        with open(file_path, "r") as file:
+            content = file.read()
+    except FileNotFoundError:
+        print("Error: File not found.")
+        sys.exit(1)
 
-# Encrypt or decrypt
-result_text = vigenere_cipher(content, key, mode)
+    # Encrypt or decrypt
+    result_text = vigenere_cipher(content, key, mode)
 
-print("\nResulting text:\n")
-print(result_text)
+    print("\nResulting text:\n")
+    print(result_text)
+
+if __name__ == "__main__":
+    main()
